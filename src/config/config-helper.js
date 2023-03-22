@@ -151,9 +151,9 @@ export function buildSearchOptionsFromConfig() {
 export function buildFacetConfigFromConfig() {
   const config = getConfig();
 
-  const facets = (config.facets || []).reduce((acc, n) => {
+  const facets = (getFacetFields() || []).reduce((acc, n) => {
     acc = acc || {};
-    acc[n] = {
+    acc[n.key] = {
       type: "value",
       size: 100
     };
@@ -166,11 +166,6 @@ export function buildFacetConfigFromConfig() {
 export function buildSortOptionsFromConfig() {
   const config = getConfig();
   return [
-    {
-      name: "Relevance",
-      value: "",
-      direction: ""
-    },
     ...(config.sortFields || []).reduce((acc, sortField) => {
       acc.push({
         name: `${capitalizeFirstLetter(sortField)} ASC`,
@@ -202,7 +197,9 @@ export function buildAutocompleteQueryConfig() {
       types: {
         documents: {
           fields: getConfig().querySuggestFields
-        }
+        },
+        // Limit the number of suggestions returned from the server
+        size: 4
       }
     }
   };

@@ -2,30 +2,12 @@
   "host": "http://localhost:9200",
   "index": "siga-doc-2023",
   "resultFields": [
-    "@timestamp",
     "code",
-    "date",
-    "dtassinatura",
-    "dtdoc",
     "facet_ano",
-    "facet_especie",
-    "facet_mes",
-    "facet_modelo",
     "facet_orgao",
     "facet_origem",
-    "facet_subscritor_lotacao",
-    "facet_tipo",
-    "field_codigo",
-    "field_data",
-    "field_especie",
-    "field_modelo",
-    "field_orgao",
-    "field_origem",
-    "field_subscritor",
-    "field_subscritor_lotacao",
-    "title",
-    "url",
-    "id"
+    "facet_especie",
+    "facet_modelo"
   ],
   "sortFields": [
     "code",
@@ -33,16 +15,27 @@
     "dtassinatura"
   ],
   "facets": [
-    "facet_ano",
-    "facet_especie",
-    "facet_orgao",
-    "facet_origem",
-    "facet_subscritor_lotacao",
-    "facet_tipo",
-    "field_especie",
-    "field_subscritor_lotacao"
+    {
+      "key": "facet_ano",
+      "label": "ANO"
+    },
+    {
+      "key": "facet_orgao",
+      "label": "ÓRGÃO"
+    },
+    {
+      "key": "facet_origem",
+      "label": "ORIGEM"
+    },
+    {
+      "key": "facet_especie",
+      "label": "ESPÉCIE"
+    }
   ],
   "titleField": "title",
   "urlField": "url",
-  "thumbnailField": "code"
+  "thumbnailField": "code",
+  "searchFields": [
+    "title"
+  ]
 }

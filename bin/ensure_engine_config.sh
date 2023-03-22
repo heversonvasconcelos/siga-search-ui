@@ -1,8 +1,8 @@
 project_root=$( cd "$(dirname "${BASH_SOURCE[0]}")/.." ; pwd -P )
 
-if [[ ! -e ${project_root}/src/config/engine.json ]]; then
-    echo "{}" > src/config/engine.json
-    echo "wrote empty engine.json"
+if [[ ! -e ${project_root}/src/config/index.json ]]; then
+    echo "{}" > src/config/index.json
+    echo "wrote empty index.json"
 else
-  echo "engine.json already exists"
+  echo "index.json already exists"
 fi
