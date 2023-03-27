@@ -1,7 +1,5 @@
 import React from "react";
 
-import ElasticsearchAPIConnector from "@elastic/search-ui-elasticsearch-connector";
-
 import {
   ErrorBoundary,
   Facet,
@@ -24,11 +22,41 @@ import {
   getResultFields
 } from "./config/config-helper";
 
-const { host, index } = getConfig();
-const connector = new ElasticsearchAPIConnector({
-  host,
-  index,
-});
+class ElasticsearchApiCustomConnector {
+  constructor(host) {
+    this.host = host;
+  }
+
+  async onSearch(query, options) {
+    const response = await fetch(this.host + "/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        query,
+        options
+      })
+    });
+    return response.json();
+  }
+
+  async onAutocomplete(query, options) {
+    const response = await fetch(this.host + "/autocomplete", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        query,
+        options
+      })
+    });
+    return response.json();
+  }
+}
+
+const connector = new ElasticsearchApiCustomConnector("http://localhost:8080");
 
 const config = {
   searchQuery: {
@@ -69,7 +97,7 @@ const CustomResultView = ({
             (field) => (
               <li key={field.key}>
                 <span className="sui-result__key">{field.label}</span>
-                {result[field.key] &&
+                {result[field.key] && (
                   (result[field.key].snippet && (
                     <span
                       className="sui-result__value"
@@ -82,7 +110,7 @@ const CustomResultView = ({
                       dangerouslySetInnerHTML={{ __html: result[field.key].raw }}
                     />
                   ))
-                }
+                )}
               </li>
             )
           )}
