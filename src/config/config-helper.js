@@ -49,8 +49,16 @@ export function getThumbnailField() {
   return getConfig().thumbnailField;
 }
 
+export function getResultFields() {
+  return getConfig().resultFields || [];
+}
+
 export function getFacetFields() {
   return getConfig().facets || [];
+}
+
+export function getSearchFields() {
+  return getConfig().searchFields || [];
 }
 
 export function getSortFields() {
@@ -63,30 +71,9 @@ export function getResultTitle(result) {
   return result.getSnippet(titleField);
 }
 
-// Because if a field is configured to display as a "title", we don't want
-// to display it again in the fields list
-export function stripUnnecessaryResultFields(resultFields) {
-  return Object.keys(resultFields).reduce((acc, n) => {
-    if (
-      [
-        "_meta",
-        "id",
-        toLowerCase(getTitleField()),
-        toLowerCase(getUrlField()),
-        toLowerCase(getThumbnailField()),
-      ].includes(toLowerCase(n))
-    ) {
-      return acc;
-    }
-
-    acc[n] = resultFields[n];
-    return acc;
-  }, {});
-}
-
 export function buildSearchOptionsFromConfig() {
   const config = getConfig();
-  const searchFields = (config.searchFields || config.fields || []).reduce(
+  const searchFields = (getSearchFields() || config.fields || []).reduce(
     (acc, n) => {
       acc = acc || {};
       acc[n] = {};
@@ -95,10 +82,10 @@ export function buildSearchOptionsFromConfig() {
     undefined
   );
 
-  const resultFields = (config.resultFields || config.fields || []).reduce(
+  const resultFields = (getResultFields() || config.fields || []).reduce(
     (acc, n) => {
       acc = acc || {};
-      acc[n] = {
+      acc[n.key] = {
         raw: {},
         snippet: {
           size: 100,
@@ -197,9 +184,7 @@ export function buildAutocompleteQueryConfig() {
       types: {
         documents: {
           fields: getConfig().querySuggestFields
-        },
-        // Limit the number of suggestions returned from the server
-        size: 4
+        }
       }
     }
   };

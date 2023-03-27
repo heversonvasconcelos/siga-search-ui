@@ -1,13 +1,35 @@
 {
   "host": "http://localhost:9200",
-  "index": "siga-doc-2023",
+  "index": "siga-doc-2023-202303242",
   "resultFields": [
-    "code",
-    "facet_ano",
-    "facet_orgao",
-    "facet_origem",
-    "facet_especie",
-    "facet_modelo"
+    {
+      "key": "facet_ano",
+      "label": "ANO"
+    },
+    {
+      "key": "facet_orgao",
+      "label": "ÓRGÃO"
+    },
+    {
+      "key": "facet_origem",
+      "label": "ORIGEM"
+    },
+    {
+      "key": "facet_especie",
+      "label": "ESPÉCIE"
+    },
+    {
+      "key": "facet_modelo",
+      "label": "MODELO"
+    },
+    {
+      "key": "code",
+      "label": "SIGLA"
+    },
+    {
+      "key": "title",
+      "label": "DESCRIÇÃO"
+    }
   ],
   "sortFields": [
     "code",
@@ -32,10 +54,11 @@
       "label": "ESPÉCIE"
     }
   ],
-  "titleField": "title",
+  "titleField": "code",
   "urlField": "url",
   "thumbnailField": "code",
   "searchFields": [
-    "title"
+    "title",
+    "code"
   ]
 }
