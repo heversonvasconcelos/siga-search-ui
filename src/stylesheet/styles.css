@@ -1,0 +1,7 @@
+.sui-result__key:before {
+    content: '';
+}
+
+.sui-result__key:after {
+    content: ': ';
+}
