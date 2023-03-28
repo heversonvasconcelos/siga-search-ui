@@ -24,15 +24,19 @@ import {
 } from "./config/config-helper";
 
 class ElasticsearchApiCustomConnector {
-  constructor(host) {
+  constructor(host, index, apiKey) {
     this.host = host;
+    this.index = index;
+    this.apiKey = apiKey;
   }
 
   async onSearch(query, options) {
-    const response = await fetch(this.host + "/search", {
+
+    const response = await fetch(this.host + "/" + this.index + "/search", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "apikey": this.apiKey
       },
       body: JSON.stringify({
         query,
@@ -43,10 +47,11 @@ class ElasticsearchApiCustomConnector {
   }
 
   async onAutocomplete(query, options) {
-    const response = await fetch(this.host + "/autocomplete", {
+    const response = await fetch(this.host + "/" + this.index + "/autocomplete", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "apikey": this.apiKey
       },
       body: JSON.stringify({
         query,
@@ -57,7 +62,11 @@ class ElasticsearchApiCustomConnector {
   }
 }
 
-const connector = new ElasticsearchApiCustomConnector("http://localhost:8080");
+const connector = new ElasticsearchApiCustomConnector(
+  getConfig().host,
+  getConfig().index,
+  getConfig().apiKey
+);
 
 const config = {
   searchQuery: {

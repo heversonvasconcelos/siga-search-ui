@@ -1,6 +1,7 @@
 {
-  "host": "http://localhost:9200",
-  "index": "siga-doc-2023-202303242",
+  "host": "http://localhost:8080",
+  "index": "siga-doc",
+  "apiKey": "OVFiMUtZY0IwUXZ0djVpejNobTA6dWZyUEt1Y0lUMWlKeERyTXFxUWxGUQ==",
   "resultFields": [
     {
       "key": "facet_ano",
